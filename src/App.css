@@ -1,7 +1,28 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.Nav {
+  width: 100%;
+}
+
+.Content {
+  width: 20%;
+  padding: 20px;
+  border-right: 5px solid #666;
 }
 
 .Note-Content {
-  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.active {
+  color: green;
+  font-weight: bold;
 }
