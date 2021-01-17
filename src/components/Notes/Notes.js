@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Note from "../Note/Note";
+import Context from "../../NotefulContext";
 import "./Notes.css";
 
 class Notes extends Component {
+  static contextType = Context;
   render() {
     return (
       <section className="Note_List">
         <ul>
-          {this.props.notes.map((note, i) => (
+          {this.context.notes.map((note, i) => (
             <li key={i}>
               <Note id={note.id} name={note.name} modified={note.modified} />
             </li>
