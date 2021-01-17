@@ -11,10 +11,20 @@ import { Route } from "react-router-dom";
 import "./App.css";
 
 class App extends Component {
-  state = LIST;
+  state = {
+    folders: [],
+    notes: [],
+  };
+
+  componentDidMount() {
+    this.setState({
+      folders: LIST.folders,
+      notes: LIST.notes,
+    });
+  }
 
   render() {
-    const { notes } = this.state;
+    const { notes, folders } = this.state;
     return (
       <Context.Provider value={this.state}>
         <main className="App">
@@ -22,7 +32,7 @@ class App extends Component {
           <div className="Content">
             <Route
               path="/"
-              render={(rprops) => <FolderList folders={this.state.folders} />}
+              render={(rprops) => <FolderList folders={folders} />}
             />
           </div>
           <div className="Note-Content">
