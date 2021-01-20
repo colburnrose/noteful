@@ -6,11 +6,16 @@ import "./Notes.css";
 
 class Notes extends Component {
   static contextType = Context;
+
   render() {
+    const { folderid = null } = this.props.match.params || null;
+    const notes = folderid
+      ? this.context.notes.filter((n) => n.folderId === folderid)
+      : this.context.notes;
     return (
       <section className="Note_List">
         <ul>
-          {this.context.notes.map((note, i) => (
+          {notes.map((note, i) => (
             <li key={i}>
               <Note id={note.id} name={note.name} modified={note.modified} />
             </li>

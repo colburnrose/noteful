@@ -30,28 +30,10 @@ class App extends Component {
         <main className="App">
           <Nav />
           <div className="Content">
-            <Route
-              path="/"
-              render={(rprops) => <FolderList folders={folders} />}
-            />
+            <Route path="/" component={FolderList} />
           </div>
           <div className="Note-Content">
-            <Route
-              exact
-              path={["/", "/folder/:folderid"]}
-              render={(rprops) => (
-                <Notes
-                  {...rprops}
-                  notes={
-                    rprops.match.params.folderid
-                      ? notes.filter(
-                          (n) => n.folderId === rprops.match.params.folderid
-                        )
-                      : notes
-                  }
-                />
-              )}
-            />
+            <Route exact path={["/", "/folder/:folderid"]} component={Notes} />
             <Route
               exact
               path="/note/:noteid"
