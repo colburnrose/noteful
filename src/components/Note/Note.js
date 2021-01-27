@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import Context from "../../NotefulContext";
+import PropTypes from "prop-types";
 import "./Note.css";
 
 export default function Note(props) {
-  const context = useContext(Context);
+  // const context = useContext(Context);
   const note = props.notes
     ? props.notes.find((n) => n.id === props.match.params.noteid)
     : props;
@@ -24,3 +24,14 @@ export default function Note(props) {
     </div>
   );
 }
+
+Note.defaultProps = {
+  name: "",
+  content: "",
+};
+
+Note.propTypes = {
+  name: PropTypes.string,
+  modified: PropTypes.string,
+  content: PropTypes.string,
+};
