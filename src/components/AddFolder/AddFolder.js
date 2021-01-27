@@ -50,7 +50,6 @@ export default class AddFolder extends Component {
   };
 
   render() {
-    // const { addFolder } = this.context;
     return (
       <div className="AddFolder">
         <main>

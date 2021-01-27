@@ -4,6 +4,7 @@ import Note from "./components/Note/Note";
 import Notes from "./components/Notes/Notes";
 import FolderList from "./components/Folder/FolderList";
 import AddFolder from "./components/AddFolder/AddFolder";
+import AddNote from "./components/AddNote/AddNote";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Context from "./NotefulContext";
 import config from "./config";
@@ -88,6 +89,7 @@ class App extends Component {
                 path="/note/:noteid"
                 render={(rprops) => <Note {...rprops} notes={notes} />}
               />
+              <Route path="/add/note" component={AddNote} />
             </div>
           </main>
         </Context.Provider>
