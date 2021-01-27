@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Context from "../../NotefulContext";
+import PropTypes from "prop-types";
 
 export default class FolderList extends Component {
+  static defaultProps = {
+    folders: [],
+  };
+
   static contextType = Context;
 
   render() {
@@ -16,7 +21,7 @@ export default class FolderList extends Component {
     return (
       <aside>
         <h2>Folders</h2>
-        <Link to="/add/folder">Add Folder</Link>
+        <Link to="/add/folder/">Add Folder</Link>
         <nav>
           <ul className="Folder-List">{foldersList}</ul>
         </nav>
@@ -24,3 +29,11 @@ export default class FolderList extends Component {
     );
   }
 }
+
+FolderList.propTypes = {
+  folders: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+    })
+  ),
+};

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Note from "../Note/Note";
 import Context from "../../NotefulContext";
+import PropTypes from "prop-types";
 import "./Notes.css";
 
 class Notes extends Component {
@@ -28,5 +29,15 @@ class Notes extends Component {
     );
   }
 }
+
+Notes.propTypes = {
+  notes: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      modified: PropTypes.string,
+      content: PropTypes.string,
+    })
+  ),
+};
 
 export default Notes;
