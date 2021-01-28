@@ -25,11 +25,6 @@ export default function Note(props) {
   );
 }
 
-Note.defaultProps = {
-  name: "",
-  content: "",
-};
-
 Note.propTypes = {
   name: PropTypes.string,
   modified: PropTypes.string,
