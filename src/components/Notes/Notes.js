@@ -34,8 +34,8 @@ Notes.propTypes = {
   notes: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
-      modified: PropTypes.string,
       content: PropTypes.string,
+      modified: PropTypes.string,
     })
   ),
 };
