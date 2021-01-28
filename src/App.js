@@ -17,6 +17,9 @@ class App extends Component {
   state = {
     folders: [],
     notes: [],
+    addFolder: () => {},
+    addNote: () => {},
+    deleteNote: () => {},
   };
 
   getFolders() {
@@ -55,9 +58,19 @@ class App extends Component {
     });
   };
 
+  deleteNote = (noteId) => {
+    const deletedNote = this.state.notes.filter((note) => note.id !== noteId);
+    this.setState({ notes: deletedNote });
+  };
+
   componentDidMount() {
     this.getFolders();
     this.getNotes();
+    this.setState({
+      addFolder: this.addFolder,
+      addNote: this.addNote,
+      deleteNote: this.deleteNote,
+    });
   }
 
   render() {
@@ -67,6 +80,7 @@ class App extends Component {
       folders: this.state.folders,
       addFolder: this.addFolder,
       addNote: this.addNote,
+      deleteNote: this.deleteNote,
     };
 
     return (
