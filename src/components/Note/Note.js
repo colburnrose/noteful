@@ -19,7 +19,7 @@ export default function Note(props) {
       .then((res) => {
         if (!res.ok) {
           return res.json().then((error) => {
-            throw Promise.reject(EvalError);
+            throw Promise.reject(error.message);
           });
         }
         return res.json();
