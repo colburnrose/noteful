@@ -1,16 +1,44 @@
 import React, { Component } from "react";
 import config from "../../config";
 import Context from "../../NotefulContext";
+import ValidateNoteError from "./ValidateNoteError";
 
 export default class AddNote extends Component {
   state = {
-    name: "",
-    modified: new Date(),
-    folderId: "",
-    content: "",
-    error: null,
+    name: {
+      value: "",
+      error: false,
+    },
+    modified: {
+      value: new Date(),
+      error: false,
+    },
+    folderId: {
+      value: "",
+      error: false,
+    },
+    content: {
+      value: "",
+      error: false,
+    },
   };
   static contextType = Context;
+
+  validateName() {
+    const name = this.state.name.value.trim();
+    if (name.length === 0) {
+      return "Name is required";
+    } else if (name.length < 4) {
+      return "Name must be at least 4 characters long";
+    }
+  }
+
+  validateContent() {
+    const content = this.state.content.value.trim();
+    if (content.length === 0) {
+      return "Content description is required";
+    }
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +48,7 @@ export default class AddNote extends Component {
       folderId: e.target.folderId.value,
       content: e.target.content.value,
     };
+
     fetch(`${config.API_ENDPOINT}/notes`, {
       method: "POST",
       body: JSON.stringify(note),
@@ -33,11 +62,17 @@ export default class AddNote extends Component {
         }
         return res.json();
       })
-      .then((data) => this.context.addNote(data))
+      .then((data) => {
+        this.props.history.push("/");
+        this.context.addNote(data);
+      })
       .catch((error) => this.setState({ error }));
   };
 
   render() {
+    const nameError = this.validateName();
+    const contentError = this.validateContent();
+
     const folderSelection = this.context.folders.map((folder) => {
       return (
         <option value={folder.id} key={folder.id}>
@@ -45,7 +80,6 @@ export default class AddNote extends Component {
         </option>
       );
     });
-    const { addNote } = this.context;
 
     return (
       <div className="AddNote">
@@ -61,6 +95,9 @@ export default class AddNote extends Component {
                   aria-label="note name"
                 />
               </label>
+              {this.state.name.error && (
+                <ValidateNoteError message={nameError} />
+              )}
             </div>
             <div>
               <label htmlFor="content">
@@ -72,6 +109,9 @@ export default class AddNote extends Component {
                   aria-label="content name"
                 />
               </label>
+              {this.state.content.error && (
+                <ValidateNoteError message={contentError} />
+              )}
             </div>
             <div>
               <label>
