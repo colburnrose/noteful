@@ -3,18 +3,21 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./Note.css";
 import config from "../../config";
+import Context from "../../NotefulContext";
 
 export default function Note(props) {
+  const context = useContext(Context);
   function handleClickDelete(e) {
     e.preventDefault();
 
-    const noteId = props.id;
+    let noteId = props.id ? props.id : 0;
+    noteId =
+      props.match && props.match.params && props.match.params.noteid
+        ? props.match.params.noteid
+        : noteId;
 
     fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
       method: "DELETE",
-      headers: {
-        "content-type": "applicaiton/json",
-      },
     })
       .then((res) => {
         if (!res.ok) {
@@ -22,9 +25,11 @@ export default function Note(props) {
             throw Promise.reject(EvalError);
           });
         }
-        return res.json();
+        context.deleteNote(noteId);
+        if (props.match && props.match.params && props.match.params.noteid) {
+          props.history.push("/");
+        }
       })
-      .then(() => this.context.deleteNote(noteId))
       .catch((error) => {
         console.log(error.message);
       });
@@ -33,7 +38,7 @@ export default function Note(props) {
   const note = props.notes
     ? props.notes.find((n) => n.id === props.match.params.noteid)
     : props;
-  return (
+  return note ? (
     <div className="Note">
       <h2 className="Note_title">
         <Link to={`/note/${note.id}`}>{note.name}</Link>
@@ -51,6 +56,8 @@ export default function Note(props) {
         Delete Note
       </button>
     </div>
+  ) : (
+    <h2>Loading...</h2>
   );
 }
 
